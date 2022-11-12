@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: node-app-ingress # name of the ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1 # Target URI where the traffic must be redirected
+spec:
+  rules:
+    - host: node-app.example # the dns entry where the ingress can be found
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: node-app-svc # service name to which ingress is being redirected
+                port:
+                  number: 3000 # port of the service to receive traffic
