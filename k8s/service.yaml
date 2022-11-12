@@ -1,0 +1,50 @@
+# ---
+# # ipcluster
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-proxy
+# spec:
+#   selector:
+#     app.kubernetes.io/name: nginx-proxy # pods will be selected based on this selector
+#   ports:
+#     - name: nginx
+#       protocol: TCP
+#       port: 80
+#       targetPort: 9376
+
+---
+# nodeport, it is not recommended to use this on production
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-app-svc # name of the service
+spec:
+  type: NodePort
+  selector:
+    # pods will be selected based on this selector
+    # k8s also creates an object called endpoints to keep track of the pods
+    # The controller for the Service selector continuously scans for Pods that match
+    # its selector, and then POSTs any updates to an Endpoint object also named "node-app-svc".
+    app: node-app
+  ports:
+    - name: node-app-3000 # name is not needed, if service is exposing only one port
+      protocol: TCP
+      port: 3000 # port exposed from the service
+      targetPort: 3000 # port of the service which 
+
+# ---
+# # load balancer
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: my-proxy
+# spec:
+#   type: LoadBalancer
+#   selector:
+#     app.kubernetes.io/name: nginx-proxy
+#   ports:
+#     - name: nginx
+#       protocol: TCP
+#       port: 80
+#       targetPort: 9376

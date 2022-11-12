@@ -1,0 +1,10 @@
+FROM node:14.20.1
+
+WORKDIR /src
+
+ENV PORT=3000
+COPY package.json .
+RUN npm i
+COPY . .
+
+ENTRYPOINT [ "node", "server.js" ]

@@ -1,2 +1,2 @@
 # code-snippets
-This is a reference file for code snippets
+This is a repository for code snippets
